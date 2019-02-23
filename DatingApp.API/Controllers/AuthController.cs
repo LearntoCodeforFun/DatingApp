@@ -9,6 +9,7 @@ using DatingApp.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DatingApp.API.Controllers
 {
@@ -25,7 +26,7 @@ namespace DatingApp.API.Controllers
             _repo = repo;
             _config = config;
         }
-
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
@@ -39,7 +40,7 @@ namespace DatingApp.API.Controllers
             var createdUser = await _repo.Register(UserToCreate, userForRegisterDto.Password);
             return StatusCode(201);
         }
-
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
